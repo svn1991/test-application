@@ -1,17 +1,30 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <test :test='testInfo'></test>
   </div>
 </template>
 
 <script>
+import Test from './components/Test.vue'
+import testInfo from './assets/question-answers.json'
+
 export default {
-  name: 'App',
-};
+  name: 'app',
+  components: {
+    Test
+  },
+  data () {
+    return {
+      testInfo: {}
+    }
+  },
+  created () {
+    this.testInfo = testInfo.questions
+  }
+}
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
