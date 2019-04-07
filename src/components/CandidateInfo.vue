@@ -1,6 +1,11 @@
 <template>
   <transition name="fade">
-    <div class="candidate-wrapper" v-if="!show">
+    <div class="candidate-wrapper" v-if="show">
+      <div class="candidate-info-wrapper">
+        <div class="candidate-name">
+          Name: <input type="text" value="" v-model="candidateName"/>
+        </div>
+      </div>
       <button id="start-button" @click="startTest">Start</button>
     </div>
   </transition>
@@ -9,13 +14,17 @@
 <script>
 export default {
   props: ['show'],
+  data () {
+    return {
+      candidateName: ''
+    }
+  },
   updated () {
 
   },
   methods: {
     startTest () {
-      this.show = true
-      this.$emit('startTest', this.show)
+      this.$emit('startTest', this.candidateName)
     }
   }
 }

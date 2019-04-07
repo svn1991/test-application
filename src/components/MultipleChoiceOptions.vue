@@ -3,10 +3,10 @@
     <ul>
       <li v-for="option in options" v-bind:key="option">
         <span v-if="type === 'multiple-radio'">
-          <input type="radio" value="option" /> {{option}}
+          <input type="radio" v-bind:value="option" v-bind:name="groupBy" v-model="picked" @change="isRadioAnswered"/> {{option}}
         </span>
         <span v-else-if="type === 'multiple-checkbox'">
-          <input type="checkbox" value="option" /> {{option}}
+          <input type="checkbox" v-bind:value="option" v-model="checked" @change="isCheckboxAnswered"/> {{option}}
         </span>
       </li>
     </ul>
@@ -15,7 +15,21 @@
 
 <script>
 export default {
-  props: ['type', 'options']
+  props: ['type', 'options', 'groupBy'],
+  data () {
+    return {
+      picked: '',
+      checked: []
+    }
+  },
+  methods: {
+    isRadioAnswered () {
+      this.$emit('answered', !!this.picked)
+    },
+    isCheckboxAnswered () {
+      this.$emit('answered', this.checked.length > 0)
+    }
+  }
 }
 </script>
 
