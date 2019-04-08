@@ -9,11 +9,11 @@
       </div>
       <div class="good-score" v-if="goodScore">
         <span>Good Job!</span>
-        <img src="./assets/smile-emoticon.png" alt="smile-emoticon" />
+        <img src="../assets/smile-emoticon.png" alt="smile-emoticon" />
       </div>
       <div class="bad-score" v-if="!goodScore">
         <span>Better Luck Next Time!</span>
-        <img src="./assets/bye-emoticon.png" alt="bye-emoticon" />
+        <img src="../assets/bye-emoticon.png" alt="bye-emoticon" />
       </div>
     </div>
   </transition>
