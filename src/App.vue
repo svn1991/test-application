@@ -1,15 +1,21 @@
+<!--
+  Entry to app component which connects getting
+  1. candidate information
+  2. test questions
+  3. result page
+-->
 <template>
   <div id="app">
     <candidate-info @startTest="startTestClicked($event)" :show="showIntro"></candidate-info>
     <test :test='testInfo' :show='startTest' @testEnded="endTestClicked($event)"></test>
-    <results :show="testEnded" :name="candidateName" :results="results"></results>
+    <end-test :show="testEnded" :name="candidateName" :results="results"></end-test>
   </div>
 </template>
 
 <script>
 import CandidateInfo from './components/CandidateInfo.vue'
 import Test from './components/Test.vue'
-import Results from './components/Results.vue'
+import EndTest from './components/EndTest.vue'
 
 import testInfo from './assets/question-answers.json'
 
@@ -18,7 +24,7 @@ export default {
   components: {
     CandidateInfo,
     Test,
-    Results
+    EndTest
   },
   data () {
     return {
@@ -38,6 +44,7 @@ export default {
     this.testInfo = testInfo.questions
   },
   methods: {
+    // ensure toggling between the different components
     startTestClicked (candidateName) {
       this.showIntro = false
       this.startTest = true
@@ -55,12 +62,25 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url(./assets/css/reset.css);
+body {
+  background-color: #063852;
+
+  #app {
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #ffffff;
+    width: 70%;
+    height: calc(100vh - 100px);
+    margin: 100px auto 0;
+    position: relative;
+
+    >div {
+      position: absolute;
+      width: 100%;
+    }
+  }
 }
 </style>

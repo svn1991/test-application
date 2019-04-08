@@ -1,5 +1,12 @@
+<!--
+  Scope:
+    1. Print out all the questions and options stated in question-answers.json
+    2. For each question, candidate should receive info if question is answered correctly or not
+    3. Able to traverse between questions till end of test
+    4. Send signal when test is completed
+-->
 <template>
-  <transition name="fade">
+  <transition name="fade" mode="out-in">
     <div class="test-wrapper" v-if="show">
       <transition-group name="fade">
         <div v-for="(questionInfo, index) in test" v-bind:key="index+'_'+index" v-bind:indexNumber="index">
@@ -14,14 +21,13 @@
                     @answered="answered=$event"
                     @answer="answer=$event"
                   ></multiple-choice-options>
-                  <transition name="fade" mode="out-in">
-                    <div class="result" v-if="answerSubmitted">
-                      <div class="pass" v-if="showResult">You answered correctly. Good job!</div>
-                      <div class="fail" v-if="!showResult">
-                        That was the wrong answer.<br />
-                        Let's do better in the next question!</div>
-                    </div>
-                  </transition>
+                  <question-result
+                    v-if="answerSubmitted"
+                    :showEncourage="displayQuestion < test.length-1"
+                    :questionObject="test[displayQuestion]"
+                    :candidateAnswer="answer"
+                    @returnFromQuestionResult="resultStatusReturned($event)"
+                  ></question-result>
                 </div>
                 <div v-else-if="questionInfo.type === 'text'">
                   <text-options @answered="answered=$event" @answer="answer=$event"></text-options>
@@ -46,6 +52,7 @@
 import Question from './Question.vue'
 import MultipleChoiceOptions from './MultipleChoiceOptions.vue'
 import TextOptions from './TextOptions.vue'
+import QuestionResult from './QuestionResult.vue'
 
 export default {
   props: ['show', 'test'],
@@ -57,72 +64,54 @@ export default {
       fixedAnswers: [],
       answered: false,
       answerSubmitted: false,
-      correct: 0,
-      showResult: false
+      correct: 0
     }
   },
   components: {
     Question,
     MultipleChoiceOptions,
-    TextOptions
+    TextOptions,
+    QuestionResult
   },
   methods: {
+    /*
+      Desc:
+      When candidate submits answer,
+      'answerSubmitted' flag helps to show if answer is correct or not
+    */
     answerIsSubmitted () {
-      this.checkResults()
       this.answerSubmitted = true
     },
-    checkResults () {
-      let currentQuestionInfo = this.test[this.displayQuestion]
-      let type = currentQuestionInfo.type
-      let candidateAnswer = this.answer
-      let correctAnswer = currentQuestionInfo.answers
-
-      let record = {
-        question: currentQuestionInfo.question,
-        candidateAnswer: candidateAnswer
-      }
-
-      switch (type) {
-        case 'multiple-radio':
-          if (candidateAnswer === correctAnswer) {
-            this.showResult = true
-            this.correct++
-          }
-          record.preDefinedAnswer = correctAnswer
-          this.fixedAnswers.push(record)
-          break
-        case 'multiple-checkbox':
-          if (this.isArrayEqual(candidateAnswer, correctAnswer)) {
-            this.showResult = true
-            this.correct++
-          }
-          record.preDefinedAnswer = correctAnswer
-          this.fixedAnswers.push(record)
-          break
-        case 'text':
-          this.openEndedAnswers.push(record)
-          break
-        default:
-          console.log('No result check for question type: ' + type)
+    /*
+      Desc:
+      Info from result component is returned and stored:
+      -> update questions answered correctly
+      -> update and categorize the questions between
+         questions with/without pre-given answers
+    */
+    resultStatusReturned (info) {
+      this.correct += info.point
+      if (info.type === 'fixed') {
+        this.fixedAnswers.push(info.record)
+      } else {
+        this.openEndedAnswers.push(info.record)
       }
     },
-    isArrayEqual (array1, array2) {
-      if (array1.length === array2.length) {
-        let arrayString1 = array1.sort().join(',')
-        let arrayString2 = array2.sort().join(',')
-        if (arrayString1 === arrayString2) {
-          return true
-        }
-      }
-      return false
-    },
+    /*
+      Desc:
+      Reset 'data' variables to prepare for next question
+    */
     getNextQuestion () {
       this.answered = false
       this.answer = ''
       this.answerSubmitted = false
-      this.showResult = false
       this.displayQuestion++
     },
+    /*
+      Desc:
+      Send back information to parent component regarding
+      candidate performance
+    */
     testFinished () {
       this.$emit('testEnded', {
         testRecord: this.fixedAnswers,
@@ -134,7 +123,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .fade-enter-active {
   transition: opacity 0.25s ease-out 0.25s;
 }
@@ -146,7 +135,47 @@ export default {
   opacity: 0;
 }
 
-.no-change {
-  pointer-events: none;
+.test-wrapper {
+  .answer-wrapper {
+    min-height: 150px;
+    margin-bottom: 10px;
+    &.no-change {
+      pointer-events: none;
+    }
+  }
+
+  .next-button-wrapper button {
+    border-radius: 8px;
+    padding: 15px 50px;
+    font-size: 22px;
+    text-decoration: none;
+    margin: 30px 20px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+    border: none;
+
+    &:hover {
+      background-color: #48E68B;
+    }
+
+    &:active {
+      transform: translate(0px, 5px);
+      -webkit-transform: translate(0px, 5px);
+      box-shadow: 0px 1px 0px 0px;
+    }
+
+    &#submit-answer {
+      background-color: #ac5c00;
+      -webkit-box-shadow: 0px 5px 0px 0px #7b4201;
+      box-shadow: 0px 5px 0px 0px #7b4201;
+
+      &:hover {
+        background-color: #f08105;
+      }
+    }
+  }
 }
 </style>

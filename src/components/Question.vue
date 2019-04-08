@@ -1,3 +1,6 @@
+<!--
+  Scope: Display question based on props passed in
+-->
 <template>
     <div class="question-wrapper">{{question}}</div>
 </template>
@@ -9,5 +12,8 @@ export default {
 </script>
 
 <style>
-
+.question-wrapper {
+  min-height: 50px;
+  margin-bottom: 10px;
+}
 </style>
