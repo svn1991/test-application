@@ -3,7 +3,7 @@
 -->
 <template>
   <div class="question-result-wrapper">
-    <div class="result" v-if="showOverall"> 
+    <div class="result" v-if="showOverall">
       <div class="pass" v-bind:class="showResult ? 'showResult' : 'hideResult'">You answered correctly. Good job!</div>
       <div class="fail" v-bind:class="!showResult ? 'showResult' : 'hideResult'">
           That was the wrong answer.<br />
