@@ -1,0 +1,73 @@
+{
+    "questions": [
+        {
+            "question": "5 + 6 = ",
+            "type": "multiple-radio",
+            "groupBy": "addition",
+            "options": [
+                "13",
+                "11",
+                "56",
+                "98"
+            ],
+            "answers": "11"
+        },
+        {
+            "question": "Select the animals which are mammals? There could be more than 1 correct answer. ",
+            "type": "multiple-checkbox",
+            "groupBy": "mammals",
+            "options": [
+                "elephant",
+                "platypus",
+                "octopus",
+                "orca",
+                "none of the above"
+            ],
+            "answers": ["elephant","orca","platypus"]
+        },
+        {
+            "question": "What is the difference between front-end and back-end?",
+            "type": "text"
+        },
+        {
+            "question": "The car ____ moving.",
+            "type": "multiple-radio",
+            "groupBy": "grammer",
+            "options": [
+                "shall",
+                "is",
+                "are",
+                "going to"
+            ],
+            "answers": "is"
+        },
+        {
+            "question": "Why is there something rather than nothing?",
+            "type": "text"
+        },
+        {
+            "question": "What is 1 + 1?",
+            "type": "multiple-checkbox",
+            "groupBy": "binaryAddition",
+            "options": [
+                "2",
+                "101",
+                "02",
+                "10",
+                "None of the above"
+            ],
+            "answers": ["02","2","10"]
+        },
+        {
+            "question": "Harry Potter and the Deathly _____________",
+            "type": "multiple-radio",
+            "groupBy": "harryPotter",
+            "options": [
+                "Hallows",
+                "Prisoner of Azkaban",
+                "Goblet of Fire"
+            ],
+            "answers": "Hallows"
+        }
+    ]
+}
