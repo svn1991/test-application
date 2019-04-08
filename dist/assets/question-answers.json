@@ -1,7 +1,7 @@
 {
     "questions": [
         {
-            "question": "5 + 6 = ",
+            "question": "5 + 6 = ?",
             "type": "multiple-radio",
             "groupBy": "addition",
             "options": [
@@ -17,13 +17,13 @@
             "type": "multiple-checkbox",
             "groupBy": "mammals",
             "options": [
-                "elephant",
-                "platypus",
-                "octopus",
-                "orca",
-                "none of the above"
+                "Elephant",
+                "Platypus",
+                "Octopus",
+                "Orca",
+                "None of the above"
             ],
-            "answers": ["elephant","orca","platypus"]
+            "answers": ["Elephant","Orca","Platypus"]
         },
         {
             "question": "What is the difference between front-end and back-end?",
