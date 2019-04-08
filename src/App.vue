@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <candidate-info @startTest="startTestClicked($event)" :show="showIntro"></candidate-info>
-    <test :test='testInfo' :show='startTest' @testEnded="endTestClicked"></test>
-    <results :show="testEnded"></results>
+    <test :test='testInfo' :show='startTest' @testEnded="endTestClicked($event)"></test>
+    <results :show="testEnded" :name="candidateName" :results="results"></results>
   </div>
 </template>
 
@@ -26,7 +26,12 @@ export default {
       startTest: false,
       testEnded: false,
       candidateName: '',
-      testInfo: []
+      testInfo: [],
+      results: {
+        testRecord: [],
+        testScore: 0,
+        testOpenEnded: []
+      }
     }
   },
   created () {
@@ -41,6 +46,9 @@ export default {
     endTestClicked (endInfo) {
       this.startTest = false
       this.testEnded = true
+      this.results.testRecord = endInfo.testRecord
+      this.results.testScore = endInfo.testScore
+      this.results.testOpenEnded = endInfo.testOpenEnded
     }
   }
 }
