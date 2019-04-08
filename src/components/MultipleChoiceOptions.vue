@@ -1,3 +1,6 @@
+<!--
+  Scope: Display options for questions which are multiple choice and need the options to be radio/checkbox
+  -->
 <template>
   <div class="options-wrapper">
     <ul>
@@ -29,6 +32,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Desc: Report back on the answer selected to parent component
+     */
     isRadioAnswered () {
       this.$emit('answered', !!this.picked)
       this.$emit('answer', this.picked)

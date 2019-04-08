@@ -1,15 +1,21 @@
+<!--
+  Entry to app component which connects getting
+  1. candidate information
+  2. test questions
+  3. result page
+-->
 <template>
   <div id="app">
     <candidate-info @startTest="startTestClicked($event)" :show="showIntro"></candidate-info>
     <test :test='testInfo' :show='startTest' @testEnded="endTestClicked($event)"></test>
-    <results :show="testEnded" :name="candidateName" :results="results"></results>
+    <end-test :show="testEnded" :name="candidateName" :results="results"></end-test>
   </div>
 </template>
 
 <script>
 import CandidateInfo from './components/CandidateInfo.vue'
 import Test from './components/Test.vue'
-import Results from './components/Results.vue'
+import EndTest from './components/EndTest.vue'
 
 import testInfo from './assets/question-answers.json'
 
@@ -18,7 +24,7 @@ export default {
   components: {
     CandidateInfo,
     Test,
-    Results
+    EndTest
   },
   data () {
     return {
@@ -38,6 +44,7 @@ export default {
     this.testInfo = testInfo.questions
   },
   methods: {
+    // ensure toggling between the different components
     startTestClicked (candidateName) {
       this.showIntro = false
       this.startTest = true

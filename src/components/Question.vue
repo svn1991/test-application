@@ -1,3 +1,6 @@
+<!--
+  Scope: Display question based on props passed in
+-->
 <template>
     <div class="question-wrapper">{{question}}</div>
 </template>

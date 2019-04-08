@@ -1,3 +1,9 @@
+<!--
+  Scope:
+    1. Provide an introduction to the test
+    2. Get candidate name
+    3. Start Test
+-->
 <template>
   <transition name="fade" mode="out-in">
     <div class="candidate-wrapper" v-if="show">
@@ -35,11 +41,17 @@ export default {
     }
   },
   computed: {
+    /*
+      Description: Update name in html live
+    */
     getName () {
       return ' ' + this.candidateName + ' '
     }
   },
   methods: {
+    /*
+      Description: Send signal that candidate is ready to start test
+    */
     startTest () {
       if (this.candidateName) {
         this.$emit('startTest', this.candidateName)

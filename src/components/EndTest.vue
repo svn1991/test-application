@@ -1,3 +1,6 @@
+<!--
+  Scope: Show total results based on test performance
+-->
 <template>
   <transition name="fade">
     <div class="results-wrapper" v-if="show">
@@ -27,6 +30,9 @@ export default {
       goodScore: false
     }
   },
+  /**
+   * Desc: Encouranging sentence based on performance
+   */
   updated () {
     let halfScore = this.results.testRecord.length / 2
     if (this.results.testScore >= halfScore) {
