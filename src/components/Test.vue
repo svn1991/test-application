@@ -21,13 +21,6 @@
                     @answered="answered=$event"
                     @answer="answer=$event"
                   ></multiple-choice-options>
-                  <question-result
-                    v-if="answerSubmitted"
-                    :showEncourage="displayQuestion < test.length-1"
-                    :questionObject="test[displayQuestion]"
-                    :candidateAnswer="answer"
-                    @returnFromQuestionResult="resultStatusReturned($event)"
-                  ></question-result>
                 </div>
                 <div v-else-if="questionInfo.type === 'text'">
                   <text-options @answered="answered=$event" @answer="answer=$event"></text-options>
@@ -41,6 +34,13 @@
                   <button id="finish-button" @click="testFinished" v-if="answerSubmitted && displayQuestion === test.length-1">Finish Test</button>
                 </transition>
               </div>
+              <question-result
+                v-if="answerSubmitted"
+                :showEncourage="displayQuestion < test.length-1"
+                :questionObject="test[displayQuestion]"
+                :candidateAnswer="answer"
+                @returnResultStatus="resultStatusReturned($event)"
+              ></question-result>
             </div>
         </div>
       </transition-group>
@@ -91,7 +91,7 @@ export default {
     */
     resultStatusReturned (info) {
       this.correct += info.point
-      if (info.type === 'fixed') {
+      if (info.pushToType === 'fixed') {
         this.fixedAnswers.push(info.record)
       } else {
         this.openEndedAnswers.push(info.record)
