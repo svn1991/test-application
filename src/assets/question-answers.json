@@ -23,7 +23,7 @@
                 "orca",
                 "none of the above"
             ],
-            "answers": "elephant,orca,platypus"
+            "answers": ["elephant","orca","platypus"]
         },
         {
             "question": "What is the difference between front-end and back-end?",
@@ -56,7 +56,7 @@
                 "10",
                 "None of the above"
             ],
-            "answers": "2,02,10"
+            "answers": ["02","2","10"]
         },
         {
             "question": "Harry Potter and the Deathly _____________",

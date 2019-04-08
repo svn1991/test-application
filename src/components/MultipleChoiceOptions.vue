@@ -25,9 +25,11 @@ export default {
   methods: {
     isRadioAnswered () {
       this.$emit('answered', !!this.picked)
+      this.$emit('answer', this.picked)
     },
     isCheckboxAnswered () {
       this.$emit('answered', this.checked.length > 0)
+      this.$emit('answer', this.checked)
     }
   }
 }

@@ -14,6 +14,7 @@ export default {
   methods: {
     isTextAdded () {
       this.$emit('answered', !!this.textBox)
+      this.$emit('answer', this.textBox)
     }
   }
 }
