@@ -55,12 +55,25 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url(./assets/css/reset.css);
+body {
+  background-color: #063852;
+
+  #app {
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #ffffff;
+    width: 70%;
+    height: calc(100vh - 100px);
+    margin: 100px auto 0;
+    position: relative;
+
+    >div {
+      position: absolute;
+      width: 100%;
+    }
+  }
 }
 </style>

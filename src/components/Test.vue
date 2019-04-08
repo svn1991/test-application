@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="fade" mode="out-in">
     <div class="test-wrapper" v-if="show">
       <transition-group name="fade">
         <div v-for="(questionInfo, index) in test" v-bind:key="index+'_'+index" v-bind:indexNumber="index">
@@ -14,14 +14,15 @@
                     @answered="answered=$event"
                     @answer="answer=$event"
                   ></multiple-choice-options>
-                  <transition name="fade" mode="out-in">
-                    <div class="result" v-if="answerSubmitted">
-                      <div class="pass" v-if="showResult">You answered correctly. Good job!</div>
-                      <div class="fail" v-if="!showResult">
+                  <div class="result">
+                    <div class="pass" v-bind:class="answerSubmitted && showResult ? 'showResult' : 'hideResult'">You answered correctly. Good job!</div>
+                    <div class="fail" v-bind:class="answerSubmitted && !showResult ? 'showResult' : 'hideResult'">
                         That was the wrong answer.<br />
-                        Let's do better in the next question!</div>
+                        <span v-if="answerSubmitted && displayQuestion < test.length-1">
+                          Let's do better in the next question!
+                        </span>
                     </div>
-                  </transition>
+                  </div>
                 </div>
                 <div v-else-if="questionInfo.type === 'text'">
                   <text-options @answered="answered=$event" @answer="answer=$event"></text-options>
@@ -134,7 +135,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .fade-enter-active {
   transition: opacity 0.25s ease-out 0.25s;
 }
@@ -146,7 +147,61 @@ export default {
   opacity: 0;
 }
 
-.no-change {
-  pointer-events: none;
+.test-wrapper {
+  .answer-wrapper {
+    min-height: 150px;
+    margin-bottom: 10px;
+    &.no-change {
+      pointer-events: none;
+    }
+
+    .result {
+      .hideResult {
+        opacity: 0;
+        max-height: 0;
+        margin-top: 0;
+      }
+      .showResult {
+        opacity: 1;
+        max-height: 40px;
+        margin-top: 20px;
+        transition: opacity 0.25s ease-out, max-height 0.25s ease-out, margin-top 0.25s ease-out;
+      }
+    }
+  }
+
+  .next-button-wrapper button {
+    border-radius: 8px;
+    padding: 15px 50px;
+    font-size: 22px;
+    text-decoration: none;
+    margin: 30px 20px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+    border: none;
+
+    &:hover {
+      background-color: #48E68B;
+    }
+
+    &:active {
+      transform: translate(0px, 5px);
+      -webkit-transform: translate(0px, 5px);
+      box-shadow: 0px 1px 0px 0px;
+    }
+
+    &#submit-answer {
+      background-color: #ac5c00;
+      -webkit-box-shadow: 0px 5px 0px 0px #7b4201;
+      box-shadow: 0px 5px 0px 0px #7b4201;
+
+      &:hover {
+        background-color: #f08105;
+      }
+    }
+  }
 }
 </style>

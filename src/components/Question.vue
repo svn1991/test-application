@@ -9,5 +9,8 @@ export default {
 </script>
 
 <style>
-
+.question-wrapper {
+  min-height: 50px;
+  margin-bottom: 10px;
+}
 </style>
